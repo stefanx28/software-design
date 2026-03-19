@@ -3,6 +3,7 @@ package com.andrei.demo.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,4 +24,15 @@ public class Person {
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private List<Submission> submissions;
+
+    @ManyToMany
+    @JoinTable(
+            name = "person_problem",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "problem_id")
+    )
+    private List<Problem> solvedProblems;
 }

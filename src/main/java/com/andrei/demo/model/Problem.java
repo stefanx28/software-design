@@ -3,6 +3,7 @@ package com.andrei.demo.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,4 +24,11 @@ public class Problem {
     @Column(name = "difficulty", nullable = false)
     private Difficulty difficulty;
 
+
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL)
+    private List<Submission> submissions;
+
+
+    @ManyToMany(mappedBy = "solvedProblems")
+    private List<Person> solvers;
 }
