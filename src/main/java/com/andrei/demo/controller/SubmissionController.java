@@ -50,6 +50,13 @@ public class SubmissionController {
         return submissionService.updateSubmission(id, dto);
     }
 
+    @PatchMapping("/{id}")
+    public Submission patch(@PathVariable UUID id,
+                            @RequestBody SubmissionCreateDTO dto) throws ValidationException {
+        return submissionService.patchSubmission(id, dto);
+    }
+
+
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable UUID id) {

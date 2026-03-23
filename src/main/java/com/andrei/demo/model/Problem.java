@@ -1,5 +1,6 @@
 package com.andrei.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,11 +25,11 @@ public class Problem {
     @Column(name = "difficulty", nullable = false)
     private Difficulty difficulty;
 
-
-    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Submission> submissions;
 
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "solvedProblems")
     private List<Person> solvers;
 }

@@ -72,15 +72,18 @@ public class SubmissionService {
     }
 
 
+
     public Submission updateSubmission(UUID id, SubmissionCreateDTO dto) throws ValidationException {
-        Submission existing = submissionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Submission not found with id: " + id));
+        Submission existing = getById(id);
+
 
         Person person = personRepository.findById(dto.getPersonId())
-                .orElseThrow(() -> new EntityNotFoundException("Person not found with id: " + dto.getPersonId()));
+                .orElseThrow(() -> new EntityNotFoundException("Person not found"));
+
 
         Problem problem = problemRepository.findById(dto.getProblemId())
-                .orElseThrow(() -> new EntityNotFoundException("Problem not found with id: " + dto.getProblemId()));
+                .orElseThrow(() -> new EntityNotFoundException("Problem not found"));
+
 
         if (dto.getCode() == null || dto.getCode().isBlank()) {
             throw new ValidationException("Code cannot be empty");
@@ -96,6 +99,33 @@ public class SubmissionService {
     }
 
 
+
+    public Submission patchSubmission(UUID id, SubmissionCreateDTO dto) throws ValidationException {
+        Submission existing = getById(id);
+
+        if (dto.getPersonId() != null) {
+            Person person = personRepository.findById(dto.getPersonId())
+                    .orElseThrow(() -> new EntityNotFoundException("Person not found"));
+            existing.setPerson(person);
+        }
+
+        if (dto.getProblemId() != null) {
+            Problem problem = problemRepository.findById(dto.getProblemId())
+                    .orElseThrow(() -> new EntityNotFoundException("Problem not found"));
+            existing.setProblem(problem);
+        }
+
+        if (dto.getCode() != null && !dto.getCode().isBlank())
+            existing.setCode(dto.getCode());
+
+        if (dto.getLanguage() != null)
+            existing.setLanguage(dto.getLanguage());
+
+        if (dto.getResult() != null)
+            existing.setResult(dto.getResult());
+
+        return submissionRepository.save(existing);
+    }
 
     public void deleteSubmission(UUID id) {
         if (!submissionRepository.existsById(id)) {

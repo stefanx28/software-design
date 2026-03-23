@@ -15,6 +15,7 @@ import java.util.UUID;
 @RestController
 @AllArgsConstructor
 @CrossOrigin
+
 public class PersonController {
     private final PersonService personService;
 
@@ -36,8 +37,15 @@ public class PersonController {
     @PostMapping("/person")
     public Person addPerson(
             @Valid @RequestBody PersonCreateDTO personDTO
-    ) {
+    ) throws ValidationException {
         return personService.addPerson(personDTO);
+    }
+
+    @PatchMapping("/{uuid}")
+    public Person patchPerson(@PathVariable UUID uuid,
+                              @RequestBody Person person)
+            throws ValidationException {
+        return personService.patchPerson(uuid, person);
     }
 
     @PutMapping("/person/{uuid}")
