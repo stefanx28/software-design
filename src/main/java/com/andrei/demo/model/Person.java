@@ -26,6 +26,9 @@ public class Person {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false, columnDefinition = "varchar(255) default 'ADMIN'")
+    private String role;
+
     @JsonIgnore
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Submission> submissions;

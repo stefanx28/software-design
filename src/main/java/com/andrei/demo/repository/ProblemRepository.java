@@ -2,8 +2,10 @@ package com.andrei.demo.repository;
 
 import com.andrei.demo.model.Difficulty;
 import com.andrei.demo.model.Problem;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

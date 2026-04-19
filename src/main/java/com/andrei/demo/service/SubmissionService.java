@@ -1,11 +1,7 @@
 package com.andrei.demo.service;
 
 import com.andrei.demo.config.ValidationException;
-import com.andrei.demo.model.Person;
-import com.andrei.demo.model.Problem;
-import com.andrei.demo.model.Submission;
-import com.andrei.demo.model.SubmissionCreateDTO;
-import com.andrei.demo.model.SubmissionResult;
+import com.andrei.demo.model.*;
 import com.andrei.demo.repository.PersonRepository;
 import com.andrei.demo.repository.ProblemRepository;
 import com.andrei.demo.repository.SubmissionRepository;
@@ -67,6 +63,11 @@ public class SubmissionService {
         submission.setCode(dto.getCode());
         submission.setLanguage(dto.getLanguage());
         submission.setResult(SubmissionResult.ACCEPTED);
+
+        if (!person.getSolvedProblems().contains(problem)) {
+            person.getSolvedProblems().add(problem);
+            personRepository.save(person);
+        }
 
         return submissionRepository.save(submission);
     }
@@ -132,5 +133,19 @@ public class SubmissionService {
             throw new EntityNotFoundException("Submission not found with id: " + id);
         }
         submissionRepository.deleteById(id);
+    }
+
+    public SubmissionResponseDTO toDTO(Submission submission) {
+        return new SubmissionResponseDTO(
+                submission.getId(),
+                submission.getCode(),
+                submission.getLanguage(),
+                submission.getResult(),
+                submission.getSubmittedAt(),
+                submission.getPerson().getId(),
+                submission.getPerson().getName(),
+                submission.getProblem().getId(),
+                submission.getProblem().getTitle()
+        );
     }
 }

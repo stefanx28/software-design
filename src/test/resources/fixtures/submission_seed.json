@@ -1,0 +1,7 @@
+[
+  {
+    "code": "class Solution { public int[] twoSum(int[] n, int t) { return new int[]{0,1}; } }",
+    "language": "JAVA",
+    "result": "ACCEPTED"
+  }
+]

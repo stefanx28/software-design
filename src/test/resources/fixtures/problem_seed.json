@@ -1,0 +1,12 @@
+[
+  {
+    "title": "Two Sum",
+    "description": "Find two numbers that add up to target value.",
+    "difficulty": "EASY"
+  },
+  {
+    "title": "Reverse String",
+    "description": "Write a function that reverses a string array.",
+    "difficulty": "EASY"
+  }
+]

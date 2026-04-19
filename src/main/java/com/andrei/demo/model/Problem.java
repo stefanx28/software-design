@@ -3,6 +3,7 @@ package com.andrei.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Formula;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +25,9 @@ public class Problem {
     @Enumerated(EnumType.STRING)
     @Column(name = "difficulty", nullable = false)
     private Difficulty difficulty;
+
+    @Formula("(SELECT COUNT(*) FROM person_problem pp WHERE pp.problem_id = id)")
+    private Integer solverCount;
 
     @JsonIgnore
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true)

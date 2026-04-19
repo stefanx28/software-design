@@ -14,7 +14,7 @@ import java.util.UUID;
 @RestController
 @AllArgsConstructor
 @CrossOrigin
-@RequestMapping("/api/problem")
+@RequestMapping("/problem")
 public class ProblemController {
 
     private final ProblemService problemService;
